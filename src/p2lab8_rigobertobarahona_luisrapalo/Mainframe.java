@@ -17,12 +17,32 @@ public class Mainframe extends javax.swing.JFrame {
 
     public Mainframe() {
         initComponents();
+        ciudades.add("Norfair");
+        ciudades.add("Brinstar");
+        ciudades.add("Maridia");
+        ciudades.add("Zebes");
+        ciudades.add("Crateria");
+        razas.add("Mediano");
+        razas.add("Enano");
+        razas.add("Elfo");
+        razas.add("Humano");
+        Barbaro_Subclases.add("Lead");
+        Barbaro_Subclases.add("Support");
+        Barbaro_Subclases.add("Offensive");
+        Mago_Subclases.add("Support");
+        Mago_Subclases.add("Tank");
+        Picaro_Subclases.add("Spammer");
+        Picaro_Subclases.add("Tank");
     }
     ArrayList<Personaje> personajes = new ArrayList();
     ArrayList<String> ciudades = new ArrayList();
     ArrayList<String> razas = new ArrayList();
     ArrayList<String> Barbaro_Subclases = new ArrayList();
     ArrayList <String> Mago_Subclases = new ArrayList();
+    ArrayList <String> Picaro_Subclases = new ArrayList();
+    ArrayList <String> Barbaro_Armas = new ArrayList();
+    ArrayList <String> Mago_Magias = new ArrayList();
+    ArrayList <String> Picaro_Instrumentos = new ArrayList();
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
