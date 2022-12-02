@@ -37,7 +37,7 @@ public class Picaro extends Personaje{
         + "Instrumento: " + instrumento + "\n"              
         + "Ciudad: " + nacionalidad + "\n"
         + "Heists Exitosos: " + heists + "\n"               
-        + "Altura: " + height + "m" + "\n"  
+        + "Altura: " + height + "cm" + "\n"  
         + "Peso: " + peso + "kg" + "\n"
         + "AC: " + AC + "\n"
         + "CS: " + CS + "\n"

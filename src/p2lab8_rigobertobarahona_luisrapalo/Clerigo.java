@@ -40,7 +40,7 @@ public class Clerigo extends Personaje {
         + "Sub-Class: " + Pclass + "\n"
         + "Seguior de " + deity + "\n"        
         + "Ciudad: " + nacionalidad + "\n"
-        + "Altura: " + height + "m" + "\n"  
+        + "Altura: " + height + "cm" + "\n"  
         + "Peso: " + peso + "kg" + "\n"
         + "AC: " + AC + "\n"
         + "CS: " + CS + "\n"

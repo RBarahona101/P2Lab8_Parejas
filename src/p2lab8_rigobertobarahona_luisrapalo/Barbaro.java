@@ -34,7 +34,7 @@ public class Barbaro extends Personaje{
         + "Class: Barbaro" + "\n"        
         + "Sub-Class: " + Pclass + "\n"
         + "Ciudad: " + nacionalidad + "\n"
-        + "Altura: " + height + "m" + "\n"  
+        + "Altura: " + height + "cm" + "\n"  
         + "Peso: " + peso + "kg" + "\n"
         + "AC: " + AC + "\n"
         + "CS: " + CS + "\n"

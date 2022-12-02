@@ -26,7 +26,7 @@ public class Mago extends Personaje {
         + "Sub-Class: " + Pclass + "\n"  
         + "Tipo de Magia: " + magia + "\n"        
         + "Ciudad: " + nacionalidad + "\n"
-        + "Altura: " + height + "m" + "\n"  
+        + "Altura: " + height + "cm" + "\n"  
         + "Peso: " + peso + "kg" + "\n"
         + "AC: " + AC + "\n"
         + "CS: " + CS + "\n"
