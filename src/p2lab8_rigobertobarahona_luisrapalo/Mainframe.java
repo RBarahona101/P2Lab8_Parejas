@@ -1,6 +1,5 @@
 package p2lab8_rigobertobarahona_luisrapalo;
 
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -19,8 +18,11 @@ public class Mainframe extends javax.swing.JFrame {
     public Mainframe() {
         initComponents();
     }
-
-
+    ArrayList<Personaje> personajes = new ArrayList();
+    ArrayList<String> ciudades = new ArrayList();
+    ArrayList<String> razas = new ArrayList();
+    ArrayList<String> Barbaro_Subclases = new ArrayList();
+    ArrayList <String> Mago_Subclases = new ArrayList();
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
