@@ -340,6 +340,7 @@ public class Mainframe extends javax.swing.JFrame {
             }
         });
 
+        Roll.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Roll.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 RollMouseClicked(evt);
@@ -1507,8 +1508,6 @@ public class Mainframe extends javax.swing.JFrame {
             double AC2 = cAC2;
             double HP1 = cHP1;
             double HP2 = cHP2;
-            int cOPT1 = 0;
-            int cOPT2 = 0;
             // Acumulativos
             double SupportAC1 = cAC1 * 0.03;
             double SupportAC2 = cAC2 * 0.03;
@@ -2258,9 +2257,6 @@ public class Mainframe extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_P2_DefendMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -2298,7 +2294,7 @@ public class Mainframe extends javax.swing.JFrame {
         CombatDialog.setLocationRelativeTo(this);
         CombatDialog.setVisible(true);
     }
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Active_Player;
     private javax.swing.JPanel B_Background;
