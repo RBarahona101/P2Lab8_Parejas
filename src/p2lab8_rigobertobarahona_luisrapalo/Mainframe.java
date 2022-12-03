@@ -1,5 +1,6 @@
 package p2lab8_rigobertobarahona_luisrapalo;
 
+import java.awt.Color;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -127,8 +128,8 @@ public class Mainframe extends javax.swing.JFrame {
         P1_Class = new javax.swing.JLabel();
         P2_Subclass = new javax.swing.JLabel();
         P1_AC = new javax.swing.JLabel();
-        jLabel51 = new javax.swing.JLabel();
-        jLabel52 = new javax.swing.JLabel();
+        P1_HP = new javax.swing.JLabel();
+        P1_CS = new javax.swing.JLabel();
         P2_Class = new javax.swing.JLabel();
         P1_Subclass = new javax.swing.JLabel();
         P2_AC = new javax.swing.JLabel();
@@ -277,11 +278,11 @@ public class Mainframe extends javax.swing.JFrame {
         P1_AC.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         P1_AC.setText("P1 AC:");
 
-        jLabel51.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel51.setText("P1 HP: ");
+        P1_HP.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        P1_HP.setText("P1 HP: ");
 
-        jLabel52.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel52.setText("P1 CS: ");
+        P1_CS.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        P1_CS.setText("P1 CS: ");
 
         P2_Class.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         P2_Class.setText("P2 Class: ");
@@ -342,8 +343,8 @@ public class Mainframe extends javax.swing.JFrame {
                                     .addComponent(Turn_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(Active_Player, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)))
                             .addComponent(P1_AC, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(P1_HP, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(P1_CS, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -393,11 +394,11 @@ public class Mainframe extends javax.swing.JFrame {
                     .addComponent(P2_AC))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel51)
+                    .addComponent(P1_HP)
                     .addComponent(P2_HP))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel52)
+                    .addComponent(P1_CS)
                     .addComponent(P2_CS))
                 .addGap(55, 55, 55)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1358,6 +1359,124 @@ public class Mainframe extends javax.swing.JFrame {
         if (Combate_CB1.getSelectedIndex() == Combate_CB2.getSelectedIndex() ){
             JOptionPane.showMessageDialog(this, "No se permiten mirror matches");
         }else{
+            turno = 1;
+            String temp = "";
+            Combatants.clear();
+            
+            Combatants.add( personajes.get(Combate_CB1.getSelectedIndex() ) );
+            Combatants.add( personajes.get(Combate_CB2.getSelectedIndex() ) );
+            Turn_Label.setText("Turn " + turno);
+            Active_Player.setForeground(Color.RED);
+            Active_Player.setText("Active Player: " + Combatants.get(0).getNombre() );
+            
+            if (Combatants.get(0) instanceof Barbaro){
+                temp = "Barbaro";
+            } else if (Combatants.get(0) instanceof Mago) {
+                temp = "Mago";
+            } else if (Combatants.get(0) instanceof Clerigo) {
+                temp = "Clerigo";
+            } else if (Combatants.get(0) instanceof Picaro) {
+                temp = "Picaro";
+            }
+            P1_Class.setText("P1 Class: " + temp);
+            P1_Subclass.setText("P1 Subclass: " + Combatants.get(0).getPclass() );
+            if (Combatants.get(1) instanceof Barbaro){
+                temp = "Barbaro";
+            } else if (Combatants.get(1) instanceof Mago) {
+                temp = "Mago";
+            } else if (Combatants.get(1) instanceof Clerigo) {
+                temp = "Clerigo";
+            } else if (Combatants.get(1) instanceof Picaro) {
+                temp = "Picaro";
+            }
+            P2_Class.setText("P2 Class: " + temp);
+            P2_Subclass.setText("P2 Subclass: " + Combatants.get(1).getPclass() );
+            // Get Values
+            cCS1 = Combatants.get(0).getCS();
+            cCS2 = Combatants.get(1).getCS();
+            cHP1 = Combatants.get(0).getHP();
+            cHP2 = Combatants.get(1).getHP();
+            cAC1 = Combatants.get(0).getAC();
+            cAC2 = Combatants.get(1).getAC();
+            // Sub Class Modifications - 1
+            if (Combatants.get(0).getPclass().equals("Lead")) {
+                double crit = cCS1 * 0.05;
+                cCS1 = cCS1 - crit;
+            } else if (Combatants.get(0).getPclass().equals("Support")) {
+                double crit = cCS1 * 0.02;
+                cCS1 = cCS1 - crit;
+            } else if (Combatants.get(0).getPclass().equals("Spammer")) {
+                double crit = cCS1 * 0.01;
+                cCS1 = cCS1 + crit;
+            } else if (Combatants.get(0).getPclass().equals("Offensive")) {
+                double hp = cHP1 * 0.01;
+                cHP1 = cHP1 - hp;
+            }
+            // Sub Class Modificacion - 2
+            if (Combatants.get(1).getPclass().equals("Lead")) {
+                double crit = cCS2 * 0.05;
+                cCS2 = cCS2 + crit;
+            } else if (Combatants.get(1).getPclass().equals("Support")) {
+                double crit = cCS2 * 0.02;
+                cCS2 = cCS2 + crit;
+            } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                double crit = cCS2 * 0.01;
+                cCS2 = cCS2 - crit;
+            } else if (Combatants.get(1).getPclass().equals("Offensive")) {
+                double hp = cHP2 * 0.01;
+                cHP2 = cHP2 - hp;
+            }
+            // Weapon Effects
+            if (Combatants.get(0) instanceof Barbaro) {
+                if ( ( (Barbaro) Combatants.get(0) ) .getArma().equals("Pesada") ) {
+                    double crit = cCS1 * 0.03;
+                    cCS1 = cCS1 + crit;
+                }else if ( ( (Barbaro) Combatants.get(0) ).getArma().equals("Escudo") ){
+                    double hp = cHP1 * 0.05;
+                    cHP1 = cHP1 + hp;
+                }
+            } else if ( Combatants.get(0) instanceof Mago) {
+                if ( ( (Mago) Combatants.get(0) ).getMagia().equals("Blanca") ){
+                    double ac = cAC1 * 0.04;
+                    cAC1 = cAC1 + ac;
+                }
+            }
+            // Player 2
+            if (Combatants.get(1) instanceof Barbaro) {
+                if ( ( (Barbaro) Combatants.get(1) ) .getArma().equals("Pesada") ) {
+                    double crit = cCS2 * 0.03;
+                    cCS2 = cCS2 + crit;
+                }else if ( ( (Barbaro) Combatants.get(1) ).getArma().equals("Escudo") ){
+                    double hp = cHP2 * 0.05;
+                    cHP2 = cHP2 + hp;
+                }
+            } else if ( Combatants.get(1) instanceof Mago) {
+                if ( ( (Mago) Combatants.get(1) ).getMagia().equals("Blanca") ){
+                    double ac = cAC2 * 0.04;
+                    cAC2 = cAC2 + ac;
+                }
+            }
+            // Base Values
+            double Crit1 = cCS1;
+            double Crit2 = cCS2;
+            double AC1 = cAC1;
+            double AC2 = cAC2;
+            int cOPT1 = 0;
+            int cOPT2 = 0;
+            // Acumulativos
+            double SupportAC1 = cAC1 * 0.03;
+            double SupportAC2 = cAC2 * 0.03;
+            double SPMac1 = cAC1 * 0.02;
+            double SPMac2 = cAC2 * 0.02;
+            double TankHP1 = cHP1 * 0.02;
+            double TankHP2 = cHP2 * 0.02;
+            // Text Changes
+            P1_AC.setText("P1 AC: " + cAC1);
+            P1_HP.setText("P1 HP: " + cHP1);
+            P1_CS.setText("P1 CS: " + cCS1);
+            P2_AC.setText("P2 AC: " + cAC2);
+            P2_HP.setText("P2 HP: " + cHP2);
+            P2_CS.setText("P2 CS: " + cCS2);
             showCombatDialog();
         }
     }//GEN-LAST:event_PvPMouseClicked
@@ -1449,8 +1568,10 @@ public class Mainframe extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Mago_Subclase;
     private javax.swing.JLabel P1_AC;
     private javax.swing.JButton P1_Attack;
+    private javax.swing.JLabel P1_CS;
     private javax.swing.JLabel P1_Class;
     private javax.swing.JButton P1_Defend;
+    private javax.swing.JLabel P1_HP;
     private javax.swing.JLabel P1_Subclass;
     private javax.swing.JLabel P2_AC;
     private javax.swing.JButton P2_Attack;
@@ -1520,8 +1641,6 @@ public class Mainframe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

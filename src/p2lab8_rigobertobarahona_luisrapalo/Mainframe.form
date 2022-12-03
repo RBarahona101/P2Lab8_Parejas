@@ -53,8 +53,8 @@
                                       </Group>
                                   </Group>
                                   <Component id="P1_AC" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
-                                  <Component id="jLabel51" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
-                                  <Component id="jLabel52" alignment="0" min="-2" pref="168" max="-2" attributes="0"/>
+                                  <Component id="P1_HP" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
+                                  <Component id="P1_CS" alignment="0" min="-2" pref="168" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -123,12 +123,12 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel51" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P1_HP" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="P2_HP" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel52" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="P1_CS" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="P2_CS" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
@@ -211,7 +211,7 @@
                 <Property name="text" type="java.lang.String" value="P1 AC:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel51">
+            <Component class="javax.swing.JLabel" name="P1_HP">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="1"/>
@@ -219,7 +219,7 @@
                 <Property name="text" type="java.lang.String" value="P1 HP: "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel52">
+            <Component class="javax.swing.JLabel" name="P1_CS">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="1"/>
