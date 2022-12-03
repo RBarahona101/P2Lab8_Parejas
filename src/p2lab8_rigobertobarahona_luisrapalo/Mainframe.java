@@ -89,6 +89,15 @@ public class Mainframe extends javax.swing.JFrame {
         DefaultComboBoxModel M_Subclases = (DefaultComboBoxModel) Mago_Subclase.getModel();
         M_Subclases = new DefaultComboBoxModel(Mago_Subclases.toArray() );
         Mago_Subclase.setModel(M_Subclases);
+        // Combo Box de Usuarios
+        personajes.add( new Picaro( 18, "Liliana", "Elfo", "Maridia", 192, 35.8, "La Roja", 50,80, 70, "Spammer", "Arma", 999) );
+        personajes.add( new Barbaro( 30, "Conan", "Humano", "Zebes", 238, 80.8, "El Barbaro", 65, 93, 75, "Offensive", "Pesada", 999 ) );
+        DefaultComboBoxModel Lista = (DefaultComboBoxModel) Combate_CB1.getModel();
+        DefaultComboBoxModel Lista2 = (DefaultComboBoxModel) Combate_CB2.getModel();
+        Lista = new DefaultComboBoxModel(personajes.toArray() );
+        Lista2 = new DefaultComboBoxModel(personajes.toArray() );
+        Combate_CB1.setModel(Lista);
+        Combate_CB2.setModel(Lista2);
     }
     ArrayList<Personaje> personajes = new ArrayList();
     ArrayList<String> ciudades = new ArrayList();
@@ -99,6 +108,10 @@ public class Mainframe extends javax.swing.JFrame {
     ArrayList <String> Barbaro_Armas = new ArrayList();
     ArrayList <String> Mago_Magias = new ArrayList();
     ArrayList <String> Picaro_Instrumentos = new ArrayList();
+    //Valores Universales de Combate
+    ArrayList<Personaje> Combatants = new ArrayList();
+    double cCS1, cCS2, cHP1, cHP2, cAC1, cAC2, Crit1, Crit2, AC1, AC2, SupportAC1, SupportAC2, SPMac1, SPMac2, TankHP1, TankHP2;
+    int turno = 1;
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -112,7 +125,19 @@ public class Mainframe extends javax.swing.JFrame {
         Turn_Label = new javax.swing.JLabel();
         Active_Player = new javax.swing.JLabel();
         P1_Class = new javax.swing.JLabel();
+        P2_Subclass = new javax.swing.JLabel();
+        P1_AC = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+        jLabel52 = new javax.swing.JLabel();
+        P2_Class = new javax.swing.JLabel();
         P1_Subclass = new javax.swing.JLabel();
+        P2_AC = new javax.swing.JLabel();
+        P2_HP = new javax.swing.JLabel();
+        P2_CS = new javax.swing.JLabel();
+        P1_Attack = new javax.swing.JButton();
+        P1_Defend = new javax.swing.JButton();
+        P2_Attack = new javax.swing.JButton();
+        P2_Defend = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         Barbaro_Panel = new javax.swing.JPanel();
         B_Background = new javax.swing.JPanel();
@@ -217,9 +242,9 @@ public class Mainframe extends javax.swing.JFrame {
         jLabel46 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        PvP = new javax.swing.JButton();
+        PvE_T = new javax.swing.JButton();
+        PvE_A = new javax.swing.JButton();
 
         jToolBar1.setRollover(true);
 
@@ -246,8 +271,54 @@ public class Mainframe extends javax.swing.JFrame {
         P1_Class.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         P1_Class.setText("P1 Class: ");
 
+        P2_Subclass.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        P2_Subclass.setText("P2 Subclass: ");
+
+        P1_AC.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        P1_AC.setText("P1 AC:");
+
+        jLabel51.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel51.setText("P1 HP: ");
+
+        jLabel52.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel52.setText("P1 CS: ");
+
+        P2_Class.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        P2_Class.setText("P2 Class: ");
+
         P1_Subclass.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         P1_Subclass.setText("P1 Subclass: ");
+
+        P2_AC.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        P2_AC.setText("P2 AC: ");
+
+        P2_HP.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        P2_HP.setText("P2 HP: ");
+
+        P2_CS.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        P2_CS.setText("P2_CS");
+
+        P1_Attack.setBackground(new java.awt.Color(204, 0, 0));
+        P1_Attack.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        P1_Attack.setText("Attack");
+        P1_Attack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        P1_Defend.setBackground(new java.awt.Color(255, 0, 0));
+        P1_Defend.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        P1_Defend.setText("Defend");
+        P1_Defend.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        P2_Attack.setBackground(new java.awt.Color(0, 0, 153));
+        P2_Attack.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        P2_Attack.setForeground(new java.awt.Color(255, 255, 255));
+        P2_Attack.setText("Attack");
+        P2_Attack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        P2_Defend.setBackground(new java.awt.Color(51, 51, 255));
+        P2_Defend.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        P2_Defend.setForeground(new java.awt.Color(255, 255, 255));
+        P2_Defend.setText("Defend");
+        P2_Defend.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -257,19 +328,43 @@ public class Mainframe extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(P1_Class, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(P1_Subclass, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Turn_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Active_Player, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(P1_Class, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                        .addComponent(P1_Subclass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Turn_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Active_Player, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)))
+                            .addComponent(P1_AC, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(P1_Defend, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                            .addComponent(P1_Attack, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(385, 385, 385)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(P2_Class, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(P2_Subclass, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(P2_AC, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(P2_HP, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(P2_CS, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 293, Short.MAX_VALUE)
-                        .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(106, 106, 106))))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(P2_Defend, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(P2_Attack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(134, 134, 134))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,12 +379,35 @@ public class Mainframe extends javax.swing.JFrame {
                         .addComponent(Turn_Label))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
-                        .addComponent(P1_Class, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(P1_Class, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(P2_Class, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Active_Player)
-                    .addComponent(P1_Subclass))
-                .addContainerGap(378, Short.MAX_VALUE))
+                    .addComponent(P1_Subclass)
+                    .addComponent(P2_Subclass))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(P1_AC)
+                    .addComponent(P2_AC))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel51)
+                    .addComponent(P2_HP))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel52)
+                    .addComponent(P2_CS))
+                .addGap(55, 55, 55)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(P1_Attack, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(P2_Attack, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(P1_Defend, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(P2_Defend, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         CombatDialog.getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 540));
@@ -977,15 +1095,20 @@ public class Mainframe extends javax.swing.JFrame {
         jLabel48.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel48.setText("Player 2 / Computer");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("P v P ");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        PvP.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        PvP.setText("P v P ");
+        PvP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        PvP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PvPMouseClicked(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("P v E Turn");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        PvE_T.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        PvE_T.setText("P v E Turn");
+        PvE_T.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton3.setText("P v E Automatic");
+        PvE_A.setText("P v E Automatic");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1008,9 +1131,9 @@ public class Mainframe extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(307, 307, 307)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                    .addComponent(PvP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PvE_T, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PvE_A, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -1029,11 +1152,11 @@ public class Mainframe extends javax.swing.JFrame {
                     .addComponent(Combate_CB2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Combate_CB1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PvP, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PvE_T, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PvE_A, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(177, 177, 177))
         );
 
@@ -1231,6 +1354,14 @@ public class Mainframe extends javax.swing.JFrame {
         Combate_CB2.setModel(Lista);
     }//GEN-LAST:event_P_CrearMouseClicked
 
+    private void PvPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PvPMouseClicked
+        if (Combate_CB1.getSelectedIndex() == Combate_CB2.getSelectedIndex() ){
+            JOptionPane.showMessageDialog(this, "No se permiten mirror matches");
+        }else{
+            showCombatDialog();
+        }
+    }//GEN-LAST:event_PvPMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1264,6 +1395,12 @@ public class Mainframe extends javax.swing.JFrame {
                 new Mainframe().setVisible(true);
             }
         });
+    }
+    public void showCombatDialog() {
+        CombatDialog.setModal(true);
+        CombatDialog.pack();
+        CombatDialog.setLocationRelativeTo(this);
+        CombatDialog.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1310,8 +1447,18 @@ public class Mainframe extends javax.swing.JFrame {
     private javax.swing.JSpinner Mago_Peso;
     private javax.swing.JComboBox<String> Mago_Razas;
     private javax.swing.JComboBox<String> Mago_Subclase;
+    private javax.swing.JLabel P1_AC;
+    private javax.swing.JButton P1_Attack;
     private javax.swing.JLabel P1_Class;
+    private javax.swing.JButton P1_Defend;
     private javax.swing.JLabel P1_Subclass;
+    private javax.swing.JLabel P2_AC;
+    private javax.swing.JButton P2_Attack;
+    private javax.swing.JLabel P2_CS;
+    private javax.swing.JLabel P2_Class;
+    private javax.swing.JButton P2_Defend;
+    private javax.swing.JLabel P2_HP;
+    private javax.swing.JLabel P2_Subclass;
     private javax.swing.JButton P_Crear;
     private javax.swing.JComboBox<String> P_Subclases;
     private javax.swing.JComboBox<String> Picaro_Ciudad;
@@ -1323,10 +1470,10 @@ public class Mainframe extends javax.swing.JFrame {
     private javax.swing.JPanel Picaro_Panel;
     private javax.swing.JSpinner Picaro_Peso;
     private javax.swing.JComboBox<String> Picaro_Raza;
+    private javax.swing.JButton PvE_A;
+    private javax.swing.JButton PvE_T;
+    private javax.swing.JButton PvP;
     private javax.swing.JLabel Turn_Label;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1373,6 +1520,8 @@ public class Mainframe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
