@@ -47,9 +47,6 @@ public class Mainframe extends javax.swing.JFrame {
         Mago_Magias.add("Negra");
         Mago_Magias.add("Blanca");
         Mago_Magias.add("Sanador");
-        DefaultComboBoxModel P_Sub = (DefaultComboBoxModel) P_Subclases.getModel();
-        P_Sub = new DefaultComboBoxModel(Picaro_Instrumentos.toArray() );
-        P_Subclases.setModel(P_Sub);
         // Picaro INstrumentos
         Picaro_Instrumentos.add("Arma");
         Picaro_Instrumentos.add("Amuleto");
@@ -58,8 +55,9 @@ public class Mainframe extends javax.swing.JFrame {
         Instru = new DefaultComboBoxModel(Picaro_Instrumentos.toArray() );
         Instrumentos.setModel(Instru);
         // Picaro Subclases
-        Picaro_Subclases.add("Spammer");
-        Picaro_Subclases.add("Tank");
+        DefaultComboBoxModel P_Sub = (DefaultComboBoxModel) P_Subclases.getModel();
+        P_Sub = new DefaultComboBoxModel(Picaro_Subclases.toArray() );
+        P_Subclases.setModel(P_Sub);
         // Ciudad ComboBoxes
         DefaultComboBoxModel Ciudades = (DefaultComboBoxModel) Barbaro_Ciudad.getModel();
         Ciudades = new DefaultComboBoxModel(ciudades.toArray() );
@@ -111,7 +109,7 @@ public class Mainframe extends javax.swing.JFrame {
     ArrayList <String> Picaro_Instrumentos = new ArrayList();
     //Valores Universales de Combate
     ArrayList<Personaje> Combatants = new ArrayList();
-    double cCS1, cCS2, cHP1, cHP2, cAC1, cAC2, Crit1, Crit2, AC1, AC2, SupportAC1, SupportAC2, SPMac1, SPMac2, TankHP1, TankHP2;
+    double cCS1, cCS2, cHP1, cHP2, cAC1, cAC2, Crit1, Crit2, AC1, AC2, SupportAC1, SupportAC2, SPMac1, SPMac2, TankHP1, TankHP2,HP1, HP2;
     int turno = 1;
     
     @SuppressWarnings("unchecked")
@@ -139,6 +137,7 @@ public class Mainframe extends javax.swing.JFrame {
         P1_Defend = new javax.swing.JButton();
         P2_Attack = new javax.swing.JButton();
         P2_Defend = new javax.swing.JButton();
+        Roll = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         Barbaro_Panel = new javax.swing.JPanel();
         B_Background = new javax.swing.JPanel();
@@ -303,23 +302,49 @@ public class Mainframe extends javax.swing.JFrame {
         P1_Attack.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         P1_Attack.setText("Attack");
         P1_Attack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        P1_Attack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                P1_AttackMouseClicked(evt);
+            }
+        });
 
         P1_Defend.setBackground(new java.awt.Color(255, 0, 0));
         P1_Defend.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         P1_Defend.setText("Defend");
         P1_Defend.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        P1_Defend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                P1_DefendMouseClicked(evt);
+            }
+        });
 
         P2_Attack.setBackground(new java.awt.Color(0, 0, 153));
         P2_Attack.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         P2_Attack.setForeground(new java.awt.Color(255, 255, 255));
         P2_Attack.setText("Attack");
         P2_Attack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        P2_Attack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                P2_AttackMouseClicked(evt);
+            }
+        });
 
         P2_Defend.setBackground(new java.awt.Color(51, 51, 255));
         P2_Defend.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         P2_Defend.setForeground(new java.awt.Color(255, 255, 255));
         P2_Defend.setText("Defend");
         P2_Defend.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        P2_Defend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                P2_DefendMouseClicked(evt);
+            }
+        });
+
+        Roll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RollMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -330,7 +355,6 @@ public class Mainframe extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -342,9 +366,18 @@ public class Mainframe extends javax.swing.JFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(Turn_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(Active_Player, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)))
-                            .addComponent(P1_AC, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(P1_HP, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(P1_CS, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(P1_AC, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(P1_HP, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(P1_CS, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Roll, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -392,15 +425,20 @@ public class Mainframe extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(P1_AC)
                     .addComponent(P2_AC))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(P1_HP)
-                    .addComponent(P2_HP))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(P1_CS)
-                    .addComponent(P2_CS))
-                .addGap(55, 55, 55)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(P1_HP)
+                            .addComponent(P2_HP))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(P1_CS)
+                            .addComponent(P2_CS)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(Roll, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(46, 46, 46)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(P1_Attack, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(P2_Attack, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1108,6 +1146,11 @@ public class Mainframe extends javax.swing.JFrame {
         PvE_T.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         PvE_T.setText("P v E Turn");
         PvE_T.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        PvE_T.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PvE_TMouseClicked(evt);
+            }
+        });
 
         PvE_A.setText("P v E Automatic");
 
@@ -1359,10 +1402,11 @@ public class Mainframe extends javax.swing.JFrame {
         if (Combate_CB1.getSelectedIndex() == Combate_CB2.getSelectedIndex() ){
             JOptionPane.showMessageDialog(this, "No se permiten mirror matches");
         }else{
+            P2_Attack.setEnabled(true);
             turno = 1;
             String temp = "";
             Combatants.clear();
-            
+            Roll.setText("");
             Combatants.add( personajes.get(Combate_CB1.getSelectedIndex() ) );
             Combatants.add( personajes.get(Combate_CB2.getSelectedIndex() ) );
             Turn_Label.setText("Turn " + turno);
@@ -1430,7 +1474,7 @@ public class Mainframe extends javax.swing.JFrame {
             if (Combatants.get(0) instanceof Barbaro) {
                 if ( ( (Barbaro) Combatants.get(0) ) .getArma().equals("Pesada") ) {
                     double crit = cCS1 * 0.03;
-                    cCS1 = cCS1 + crit;
+                    cCS1 = cCS1 - crit;
                 }else if ( ( (Barbaro) Combatants.get(0) ).getArma().equals("Escudo") ){
                     double hp = cHP1 * 0.05;
                     cHP1 = cHP1 + hp;
@@ -1438,14 +1482,14 @@ public class Mainframe extends javax.swing.JFrame {
             } else if ( Combatants.get(0) instanceof Mago) {
                 if ( ( (Mago) Combatants.get(0) ).getMagia().equals("Blanca") ){
                     double ac = cAC1 * 0.04;
-                    cAC1 = cAC1 + ac;
+                    cAC1 = cAC1 - ac;
                 }
             }
             // Player 2
             if (Combatants.get(1) instanceof Barbaro) {
                 if ( ( (Barbaro) Combatants.get(1) ) .getArma().equals("Pesada") ) {
                     double crit = cCS2 * 0.03;
-                    cCS2 = cCS2 + crit;
+                    cCS2 = cCS2 - crit;
                 }else if ( ( (Barbaro) Combatants.get(1) ).getArma().equals("Escudo") ){
                     double hp = cHP2 * 0.05;
                     cHP2 = cHP2 + hp;
@@ -1453,7 +1497,7 @@ public class Mainframe extends javax.swing.JFrame {
             } else if ( Combatants.get(1) instanceof Mago) {
                 if ( ( (Mago) Combatants.get(1) ).getMagia().equals("Blanca") ){
                     double ac = cAC2 * 0.04;
-                    cAC2 = cAC2 + ac;
+                    cAC2 = cAC2 - ac;
                 }
             }
             // Base Values
@@ -1461,6 +1505,8 @@ public class Mainframe extends javax.swing.JFrame {
             double Crit2 = cCS2;
             double AC1 = cAC1;
             double AC2 = cAC2;
+            double HP1 = cHP1;
+            double HP2 = cHP2;
             int cOPT1 = 0;
             int cOPT2 = 0;
             // Acumulativos
@@ -1480,6 +1526,737 @@ public class Mainframe extends javax.swing.JFrame {
             showCombatDialog();
         }
     }//GEN-LAST:event_PvPMouseClicked
+
+    private void P1_AttackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P1_AttackMouseClicked
+        if (P2_Attack.isEnabled()) {
+            if (turno % 2 != 0) {
+                cAC1 = AC1;
+                if (Combatants.get(0).getPclass().equals("Support")) {
+                    SupportAC1 = cAC1 * 0.03;
+                    cAC1 = cAC1 + SupportAC1;
+                    SupportAC1 = SupportAC1 + SupportAC1;
+                } else if (Combatants.get(0).getPclass().equals("Spammer")) {
+                    SPMac1 = cAC1 * 0.02;
+                    cAC1 = cAC1 + SPMac1;
+                    SPMac1 = SPMac1 + SPMac1;
+                } else if (Combatants.get(0).getPclass().equals("Tank")) {
+                    TankHP1 = cHP1 * 0.02;
+                    cHP1 = cHP1 + TankHP1;
+                } else if (Combatants.get(0)instanceof Mago){
+                    if ( ( (Mago) Combatants.get(0) ).getMagia().equals("Sanador") ){
+                        double hp = HP1 * 0.01;
+                        cHP1 = cHP1 + hp;
+                    }
+                }
+                // Roll
+                double DMG = r.nextInt(100);
+                if (Combatants.get(0).getPclass().equals("Offensive")) {
+                    double bonus = DMG * 0.05;
+                    DMG = DMG + bonus;
+                } else if (Combatants.get(0).getPclass().equals("Spammer")) {
+                    double bonus = DMG * 0.03;
+                    DMG = DMG + bonus;
+                }
+                if (Combatants.get(0) instanceof Barbaro){
+                    if ( ( (Barbaro) Combatants.get(0) ).getArma().equals("Ligera") ){
+                        double bonus = DMG * 0.02;
+                        DMG = DMG + bonus;
+                    }
+                } else if (Combatants.get(0) instanceof Mago) {
+                    if ( ((Mago) Combatants.get(0) ).getMagia().equals("Negra")){
+                        double bonus = DMG * 0.03;
+                        DMG = DMG + bonus;
+                    }
+                }
+                // End of DMG Buffs
+                int aDPS = 0;
+                if (Combatants.get(0) instanceof Barbaro) {
+                    aDPS = 15 + r.nextInt(15);
+                } else if (Combatants.get(0) instanceof Mago) {
+                    aDPS = 5 + r.nextInt(5);
+                } else if (Combatants.get(0) instanceof Clerigo) {
+                    aDPS = 5 + r.nextInt(10);
+                } else if (Combatants.get(0) instanceof Picaro){
+                    aDPS = 15 + r.nextInt(10);
+                }
+                if (DMG > cAC2) {
+                    if (DMG > cCS1){
+                        aDPS = aDPS * 2;
+                        Roll.setText("Critial Hit! " + DMG);
+                    }else{
+                        aDPS = aDPS;
+                        Roll.setText("Hit! " + DMG);
+                    }
+                    cHP2 = cHP2 - aDPS;
+                    if (cHP2 <= 0){
+                        Roll.setText(Combatants.get(1).getNombre() + " ha sido derrotado!");
+                        JOptionPane.showMessageDialog(this, Combatants.get(0).getNombre() + " ha ganado!");
+                        CombatDialog.setVisible(false);
+                    }
+                } else {
+                    Roll.setText("Miss! " + DMG);
+                }
+                turno++;
+                Turn_Label.setText("Turn " + turno);
+                Active_Player.setForeground(Color.BLUE);
+                Active_Player.setText("Active Player: " + Combatants.get(1).getNombre());
+                P1_AC.setText("P1 AC: " + cAC1);
+                P1_HP.setText("P1 HP: " + cHP1);
+                P1_CS.setText("P1 CS: " + cCS1);
+                P2_AC.setText("P2 AC: " + cAC2);
+                P2_HP.setText("P2 HP: " + cHP2);
+                P2_CS.setText("P2 CS: " + cCS2);
+            } else {
+                JOptionPane.showMessageDialog(this, "No es su turno");
+            }
+        } else {
+            if (turno % 2 != 0) {
+                // Player Prebuffs
+                cAC1 = AC1;
+                if (Combatants.get(0).getPclass().equals("Support")) {
+                    SupportAC1 = cAC1 * 0.03;
+                    cAC1 = cAC1 + SupportAC1;
+                    SupportAC1 = SupportAC1 + SupportAC1;
+                } else if (Combatants.get(0).getPclass().equals("Spammer")) {
+                    SPMac1 = cAC1 * 0.02;
+                    cAC1 = cAC1 + SPMac1;
+                    SPMac1 = SPMac1 + SPMac1;
+                } else if (Combatants.get(0).getPclass().equals("Tank")) {
+                    TankHP1 = cHP1 * 0.02;
+                    cHP1 = cHP1 + TankHP1;
+                } else if (Combatants.get(0)instanceof Mago){
+                    if ( ( (Mago) Combatants.get(0) ).getMagia().equals("Sanador") ){
+                        double hp = HP1 * 0.01;
+                        cHP1 = cHP1 + hp;
+                    }
+                }
+                // Roll
+                double DMG = r.nextInt(100);
+                if (Combatants.get(0).getPclass().equals("Offensive")) {
+                    double bonus = DMG * 0.05;
+                    DMG = DMG + bonus;
+                } else if (Combatants.get(0).getPclass().equals("Spammer")) {
+                    double bonus = DMG * 0.03;
+                    DMG = DMG + bonus;
+                }
+                if (Combatants.get(0) instanceof Barbaro){
+                    if ( ( (Barbaro) Combatants.get(0) ).getArma().equals("Ligera") ){
+                        double bonus = DMG * 0.02;
+                        DMG = DMG + bonus;
+                    }
+                } else if (Combatants.get(0) instanceof Mago) {
+                    if ( ((Mago) Combatants.get(0) ).getMagia().equals("Negra")){
+                        double bonus = DMG * 0.03;
+                        DMG = DMG + bonus;
+                    }
+                }
+                // End of DMG Buffs
+                int aDPS = 0;
+                if (Combatants.get(0) instanceof Barbaro) {
+                    aDPS = 15 + r.nextInt(15);
+                } else if (Combatants.get(0) instanceof Mago) {
+                    aDPS = 5 + r.nextInt(5);
+                } else if (Combatants.get(0) instanceof Clerigo) {
+                    aDPS = 5 + r.nextInt(10);
+                } else if (Combatants.get(0) instanceof Picaro){
+                    aDPS = 15 + r.nextInt(10);
+                }
+                if (DMG > cAC2) {
+                    if (DMG > cCS1){
+                        aDPS = aDPS * 2;
+                        Roll.setText("Critial Hit! " + DMG);
+                    }else{
+                        aDPS = aDPS;
+                        Roll.setText("Hit! " + DMG);
+                    }
+                    cHP2 = cHP2 - aDPS;
+                    if (cHP2 <= 0){
+                        Roll.setText(Combatants.get(1).getNombre() + " ha sido derrotado!");
+                        JOptionPane.showMessageDialog(this, Combatants.get(0).getNombre() + " ha ganado!");
+                        CombatDialog.setVisible(false);
+                    }
+                } else {
+                    Roll.setText("Miss! " + DMG);
+                }
+                turno++;
+                Turn_Label.setText("Turn " + turno);
+                Active_Player.setForeground(Color.BLUE);
+                Active_Player.setText("Active Player: " + Combatants.get(1).getNombre());
+                P1_AC.setText("P1 AC: " + cAC1);
+                P1_HP.setText("P1 HP: " + cHP1);
+                P1_CS.setText("P1 CS: " + cCS1);
+                P2_AC.setText("P2 AC: " + cAC2);
+                P2_HP.setText("P2 HP: " + cHP2);
+                P2_CS.setText("P2 CS: " + cCS2);
+            } else {
+                JOptionPane.showMessageDialog(this, "No es su turno");
+            }
+        }
+    }//GEN-LAST:event_P1_AttackMouseClicked
+
+    private void P2_AttackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P2_AttackMouseClicked
+        if (P2_Attack.isEnabled()) {
+            if (turno % 2 == 0) {
+                // Player Prebuffs
+                cAC2 = AC2;
+                if (Combatants.get(1).getPclass().equals("Support")) {
+                    SupportAC2 = cAC2 * 0.03;
+                    cAC2 = cAC2 + SupportAC2;
+                    SupportAC2 = SupportAC2 + SupportAC2;
+                } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                    SPMac2 = cAC2 * 0.02;
+                    cAC2 = cAC2 + SPMac2;
+                    SPMac2 = SPMac2 + SPMac2;
+                } else if (Combatants.get(1).getPclass().equals("Tank")) {
+                    TankHP2 = cHP2 * 0.02;
+                    cHP2 = cHP2 + TankHP2;
+                } else if (Combatants.get(1) instanceof Mago) {
+                    if (((Mago) Combatants.get(1)).getMagia().equals("Sanador")) {
+                        double hp = HP2 * 0.01;
+                        cHP2 = cHP2 + hp;
+                    }
+                }
+                // Roll
+                double DMG = r.nextInt(100);
+                if (Combatants.get(1).getPclass().equals("Offensive")) {
+                    double bonus = DMG * 0.05;
+                    DMG = DMG + bonus;
+                } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                    double bonus = DMG * 0.03;
+                    DMG = DMG + bonus;
+                }
+                if (Combatants.get(1) instanceof Barbaro) {
+                    if (((Barbaro) Combatants.get(1)).getArma().equals("Ligera")) {
+                        double bonus = DMG * 0.02;
+                        DMG = DMG + bonus;
+                    }
+                } else if (Combatants.get(1) instanceof Mago) {
+                    if (((Mago) Combatants.get(1)).getMagia().equals("Negra")) {
+                        double bonus = DMG * 0.03;
+                        DMG = DMG + bonus;
+                    }
+                }
+                // End of DMG Buffs
+                int aDPS = 0;
+                if (Combatants.get(1) instanceof Barbaro) {
+                    aDPS = 15 + r.nextInt(15);
+                } else if (Combatants.get(1) instanceof Mago) {
+                    aDPS = 5 + r.nextInt(5);
+                } else if (Combatants.get(1) instanceof Clerigo) {
+                    aDPS = 5 + r.nextInt(10);
+                } else if (Combatants.get(1) instanceof Picaro) {
+                    aDPS = 15 + r.nextInt(10);
+                }
+                if (DMG > cAC1) {
+                    if (DMG > cCS2) {
+                        aDPS = aDPS * 2;
+                        Roll.setText("Critial Hit! " + DMG);
+                    } else {
+                        aDPS = aDPS;
+                        Roll.setText("Hit! " + DMG);
+                    }
+                    cHP1 = cHP1 - aDPS;
+                    if (cHP1 <= 0){
+                        Roll.setText(Combatants.get(0).getNombre() + " ha sido derrotado!");
+                        JOptionPane.showMessageDialog(this, Combatants.get(1).getNombre() + " ha ganado!");
+                        CombatDialog.setVisible(false);
+                    }
+                } else {
+                    Roll.setText("Miss! " + DMG);
+                }
+                turno++;
+                Turn_Label.setText("Turn " + turno);
+                Active_Player.setForeground(Color.RED);
+                Active_Player.setText("Active Player: " + Combatants.get(0).getNombre());
+                P1_AC.setText("P1 AC: " + cAC1);
+                P1_HP.setText("P1 HP: " + cHP1);
+                P1_CS.setText("P1 CS: " + cCS1);
+                P2_AC.setText("P2 AC: " + cAC2);
+                P2_HP.setText("P2 HP: " + cHP2);
+                P2_CS.setText("P2 CS: " + cCS2);
+            } else {
+                JOptionPane.showMessageDialog(this, "No es su turno");
+            }
+        } else {
+            if (turno % 2 == 0) {
+                // Player Prebuffs
+                cAC2 = AC2;
+                if (Combatants.get(1).getPclass().equals("Support")) {
+                    SupportAC2 = cAC2 * 0.03;
+                    cAC2 = cAC2 + SupportAC2;
+                    SupportAC2 = SupportAC2 + SupportAC2;
+                } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                    SPMac2 = cAC2 * 0.02;
+                    cAC2 = cAC2 + SPMac2;
+                    SPMac2 = SPMac2 + SPMac2;
+                } else if (Combatants.get(1).getPclass().equals("Tank")) {
+                    TankHP2 = cHP2 * 0.02;
+                    cHP2 = cHP2 + TankHP2;
+                } else if (Combatants.get(1) instanceof Mago) {
+                    if (((Mago) Combatants.get(1)).getMagia().equals("Sanador")) {
+                        double hp = HP2 * 0.01;
+                        cHP2 = cHP2 + hp;
+                    }
+                }
+                // Roll
+                double DMG = r.nextInt(100);
+                if (Combatants.get(1).getPclass().equals("Offensive")) {
+                    double bonus = DMG * 0.05;
+                    DMG = DMG + bonus;
+                } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                    double bonus = DMG * 0.03;
+                    DMG = DMG + bonus;
+                }
+                if (Combatants.get(1) instanceof Barbaro) {
+                    if (((Barbaro) Combatants.get(1)).getArma().equals("Ligera")) {
+                        double bonus = DMG * 0.02;
+                        DMG = DMG + bonus;
+                    }
+                } else if (Combatants.get(1) instanceof Mago) {
+                    if (((Mago) Combatants.get(1)).getMagia().equals("Negra")) {
+                        double bonus = DMG * 0.03;
+                        DMG = DMG + bonus;
+                    }
+                }
+                // End of DMG Buffs
+                int aDPS = 0;
+                if (Combatants.get(1) instanceof Barbaro) {
+                    aDPS = 15 + r.nextInt(15);
+                } else if (Combatants.get(1) instanceof Mago) {
+                    aDPS = 5 + r.nextInt(5);
+                } else if (Combatants.get(1) instanceof Clerigo) {
+                    aDPS = 5 + r.nextInt(10);
+                } else if (Combatants.get(1) instanceof Picaro) {
+                    aDPS = 15 + r.nextInt(10);
+                }
+                if (DMG > cAC1) {
+                    if (DMG > cCS2) {
+                        aDPS = aDPS * 2;
+                        Roll.setText("Critial Hit! " + DMG);
+                    } else {
+                        aDPS = aDPS;
+                        Roll.setText("Hit! " + DMG);
+                    }
+                    cHP1 = cHP1 - aDPS;
+                    if (cHP1 <= 0){
+                        Roll.setText(Combatants.get(0).getNombre() + " ha sido derrotado!");
+                        JOptionPane.showMessageDialog(this, Combatants.get(1).getNombre() + " ha ganado!");
+                        CombatDialog.setVisible(false);
+                    }
+                } else {
+                    Roll.setText("Miss! " + DMG);
+                }
+                turno++;
+                Turn_Label.setText("Turn " + turno);
+                Active_Player.setForeground(Color.RED);
+                Active_Player.setText("Active Player: " + Combatants.get(0).getNombre());
+                P1_AC.setText("P1 AC: " + cAC1);
+                P1_HP.setText("P1 HP: " + cHP1);
+                P1_CS.setText("P1 CS: " + cCS1);
+                P2_AC.setText("P2 AC: " + cAC2);
+                P2_HP.setText("P2 HP: " + cHP2);
+                P2_CS.setText("P2 CS: " + cCS2);
+            } else {
+                JOptionPane.showMessageDialog(this, "No es su turno");
+            }
+        }
+    }//GEN-LAST:event_P2_AttackMouseClicked
+
+    private void PvE_TMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PvE_TMouseClicked
+        if (Combate_CB1.getSelectedIndex() == Combate_CB2.getSelectedIndex()) {
+            JOptionPane.showMessageDialog(this, "No se permiten mirror matches");
+        } else {
+            P2_Attack.setEnabled(false);
+            turno = 1;
+            String temp = "";
+            Combatants.clear();
+
+            Combatants.add(personajes.get(Combate_CB1.getSelectedIndex()));
+            Combatants.add(personajes.get(Combate_CB2.getSelectedIndex()));
+            Turn_Label.setText("Turn " + turno);
+            Active_Player.setForeground(Color.RED);
+            Active_Player.setText("Active Player: " + Combatants.get(0).getNombre());
+
+            if (Combatants.get(0) instanceof Barbaro) {
+                temp = "Barbaro";
+            } else if (Combatants.get(0) instanceof Mago) {
+                temp = "Mago";
+            } else if (Combatants.get(0) instanceof Clerigo) {
+                temp = "Clerigo";
+            } else if (Combatants.get(0) instanceof Picaro) {
+                temp = "Picaro";
+            }
+            P1_Class.setText("P1 Class: " + temp);
+            P1_Subclass.setText("P1 Subclass: " + Combatants.get(0).getPclass());
+            if (Combatants.get(1) instanceof Barbaro) {
+                temp = "Barbaro";
+            } else if (Combatants.get(1) instanceof Mago) {
+                temp = "Mago";
+            } else if (Combatants.get(1) instanceof Clerigo) {
+                temp = "Clerigo";
+            } else if (Combatants.get(1) instanceof Picaro) {
+                temp = "Picaro";
+            }
+            P2_Class.setText("P2 Class: " + temp);
+            P2_Subclass.setText("P2 Subclass: " + Combatants.get(1).getPclass());
+            // Get Values
+            cCS1 = Combatants.get(0).getCS();
+            cCS2 = Combatants.get(1).getCS();
+            cHP1 = Combatants.get(0).getHP();
+            cHP2 = Combatants.get(1).getHP();
+            cAC1 = Combatants.get(0).getAC();
+            cAC2 = Combatants.get(1).getAC();
+            // Sub Class Modifications - 1
+            if (Combatants.get(0).getPclass().equals("Lead")) {
+                double crit = cCS1 * 0.05;
+                cCS1 = cCS1 - crit;
+            } else if (Combatants.get(0).getPclass().equals("Support")) {
+                double crit = cCS1 * 0.02;
+                cCS1 = cCS1 - crit;
+            } else if (Combatants.get(0).getPclass().equals("Spammer")) {
+                double crit = cCS1 * 0.01;
+                cCS1 = cCS1 + crit;
+            } else if (Combatants.get(0).getPclass().equals("Offensive")) {
+                double hp = cHP1 * 0.01;
+                cHP1 = cHP1 - hp;
+            }
+            // Sub Class Modificacion - 2
+            if (Combatants.get(1).getPclass().equals("Lead")) {
+                double crit = cCS2 * 0.05;
+                cCS2 = cCS2 + crit;
+            } else if (Combatants.get(1).getPclass().equals("Support")) {
+                double crit = cCS2 * 0.02;
+                cCS2 = cCS2 + crit;
+            } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                double crit = cCS2 * 0.01;
+                cCS2 = cCS2 - crit;
+            } else if (Combatants.get(1).getPclass().equals("Offensive")) {
+                double hp = cHP2 * 0.01;
+                cHP2 = cHP2 - hp;
+            }
+            // Weapon Effects
+            if (Combatants.get(0) instanceof Barbaro) {
+                if (((Barbaro) Combatants.get(0)).getArma().equals("Pesada")) {
+                    double crit = cCS1 * 0.03;
+                    cCS1 = cCS1 - crit;
+                } else if (((Barbaro) Combatants.get(0)).getArma().equals("Escudo")) {
+                    double hp = cHP1 * 0.05;
+                    cHP1 = cHP1 + hp;
+                }
+            } else if (Combatants.get(0) instanceof Mago) {
+                if (((Mago) Combatants.get(0)).getMagia().equals("Blanca")) {
+                    double ac = cAC1 * 0.04;
+                    cAC1 = cAC1 - ac;
+                }
+            }
+            // Player 2
+            if (Combatants.get(1) instanceof Barbaro) {
+                if (((Barbaro) Combatants.get(1)).getArma().equals("Pesada")) {
+                    double crit = cCS2 * 0.03;
+                    cCS2 = cCS2 - crit;
+                } else if (((Barbaro) Combatants.get(1)).getArma().equals("Escudo")) {
+                    double hp = cHP2 * 0.05;
+                    cHP2 = cHP2 + hp;
+                }
+            } else if (Combatants.get(1) instanceof Mago) {
+                if (((Mago) Combatants.get(1)).getMagia().equals("Blanca")) {
+                    double ac = cAC2 * 0.04;
+                    cAC2 = cAC2 - ac;
+                }
+            }
+            // Base Values
+            double Crit1 = cCS1;
+            double Crit2 = cCS2;
+            double AC1 = cAC1;
+            double AC2 = cAC2;
+
+            // Acumulativos
+            double SupportAC1 = cAC1 * 0.03;
+            double SupportAC2 = cAC2 * 0.03;
+            double SPMac1 = cAC1 * 0.02;
+            double SPMac2 = cAC2 * 0.02;
+            double TankHP1 = cHP1 * 0.02;
+            double TankHP2 = cHP2 * 0.02;
+            // Text Changes
+            P1_AC.setText("P1 AC: " + cAC1);
+            P1_HP.setText("P1 HP: " + cHP1);
+            P1_CS.setText("P1 CS: " + cCS1);
+            P2_AC.setText("P2 AC: " + cAC2);
+            P2_HP.setText("P2 HP: " + cHP2);
+            P2_CS.setText("P2 CS: " + cCS2);
+            showCombatDialog();
+        }
+    }//GEN-LAST:event_PvE_TMouseClicked
+
+    private void P1_DefendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P1_DefendMouseClicked
+        if (P2_Attack.isEnabled()) {
+            if (turno % 2 != 0) {
+                // Player Prebuffs
+                cAC1 = AC1;
+                if (Combatants.get(0).getPclass().equals("Support")) {
+                    SupportAC1 = cAC1 * 0.03;
+                    cAC1 = cAC1 + SupportAC1;
+                    SupportAC1 = SupportAC1 + SupportAC1;
+                } else if (Combatants.get(0).getPclass().equals("Spammer")) {
+                    SPMac1 = cAC1 * 0.02;
+                    cAC1 = cAC1 + SPMac1;
+                    SPMac1 = SPMac1 + SPMac1;
+                } else if (Combatants.get(0).getPclass().equals("Tank")) {
+                    TankHP1 = cHP1 * 0.02;
+                    cHP1 = cHP1 + TankHP1;
+                } else if (Combatants.get(0) instanceof Mago) {
+                    if (((Mago) Combatants.get(0)).getMagia().equals("Sanador")) {
+                        double hp = HP1 * 0.01;
+                        cHP1 = cHP1 + hp;
+                    }
+                }
+                cAC1 = cAC1 + 10;
+                Roll.setText(Combatants.get(0).getNombre() + " defiende!");
+                turno++;
+                Turn_Label.setText("Turn " + turno);
+                Active_Player.setForeground(Color.BLUE);
+                Active_Player.setText("Active Player: " + Combatants.get(1).getNombre());
+                P1_AC.setText("P1 AC: " + cAC1);
+                P1_HP.setText("P1 HP: " + cHP1);
+                P1_CS.setText("P1 CS: " + cCS1);
+                P2_AC.setText("P2 AC: " + cAC2);
+                P2_HP.setText("P2 HP: " + cHP2);
+                P2_CS.setText("P2 CS: " + cCS2);
+            } else {
+                JOptionPane.showMessageDialog(this, "No es su turno");
+            }
+        } else {
+            if (turno % 2 != 0) {
+                cAC1 = AC1;
+                if (Combatants.get(0).getPclass().equals("Support")) {
+                    SupportAC1 = cAC1 * 0.03;
+                    cAC1 = cAC1 + SupportAC1;
+                    SupportAC1 = SupportAC1 + SupportAC1;
+                } else if (Combatants.get(0).getPclass().equals("Spammer")) {
+                    SPMac1 = cAC1 * 0.02;
+                    cAC1 = cAC1 + SPMac1;
+                    SPMac1 = SPMac1 + SPMac1;
+                } else if (Combatants.get(0).getPclass().equals("Tank")) {
+                    TankHP1 = cHP1 * 0.02;
+                    cHP1 = cHP1 + TankHP1;
+                } else if (Combatants.get(0) instanceof Mago) {
+                    if (((Mago) Combatants.get(0)).getMagia().equals("Sanador")) {
+                        double hp = HP1 * 0.01;
+                        cHP1 = cHP1 + hp;
+                    }
+                }
+                cAC1 = cAC1 + 10;
+                Roll.setText(Combatants.get(0).getNombre() + " defiende!");
+                turno++;
+                Turn_Label.setText("Turn " + turno);
+                Active_Player.setForeground(Color.BLUE);
+                Active_Player.setText("Active Player: " + Combatants.get(1).getNombre());
+                P1_AC.setText("P1 AC: " + cAC1);
+                P1_HP.setText("P1 HP: " + cHP1);
+                P1_CS.setText("P1 CS: " + cCS1);
+                P2_AC.setText("P2 AC: " + cAC2);
+                P2_HP.setText("P2 HP: " + cHP2);
+                P2_CS.setText("P2 CS: " + cCS2);
+            } else {
+                JOptionPane.showMessageDialog(this, "No es su turno");
+            }
+        }
+    }//GEN-LAST:event_P1_DefendMouseClicked
+
+    private void RollMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RollMouseClicked
+        if (P2_Attack.isEnabled()) {
+            JOptionPane.showMessageDialog(this, "Esto es para PvE tbh");
+        } else {
+            if (turno % 2 == 0) {
+                // Player Prebuffs
+                cAC2 = AC2;
+                if (Combatants.get(1).getPclass().equals("Support")) {
+                    SupportAC2 = cAC2 * 0.03;
+                    cAC2 = cAC2 + SupportAC2;
+                    SupportAC2 = SupportAC2 + SupportAC2;
+                } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                    SPMac2 = cAC2 * 0.02;
+                    cAC2 = cAC2 + SPMac2;
+                    SPMac2 = SPMac2 + SPMac2;
+                } else if (Combatants.get(1).getPclass().equals("Tank")) {
+                    TankHP2 = cHP2 * 0.02;
+                    cHP2 = cHP2 + TankHP2;
+                } else if (Combatants.get(1) instanceof Mago) {
+                    if (((Mago) Combatants.get(1)).getMagia().equals("Sanador")) {
+                        double hp = HP2 * 0.01;
+                        cHP2 = cHP2 + hp;
+                    }
+                }
+                int bot = r.nextInt(10);
+                if (bot % 2 != 0) {
+                    // Roll
+                    double DMG = r.nextInt(100);
+                    if (Combatants.get(1).getPclass().equals("Offensive")) {
+                        double bonus = DMG * 0.05;
+                        DMG = DMG + bonus;
+                    } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                        double bonus = DMG * 0.03;
+                        DMG = DMG + bonus;
+                    }
+                    if (Combatants.get(1) instanceof Barbaro) {
+                        if (((Barbaro) Combatants.get(1)).getArma().equals("Ligera")) {
+                            double bonus = DMG * 0.02;
+                            DMG = DMG + bonus;
+                        }
+                    } else if (Combatants.get(1) instanceof Mago) {
+                        if (((Mago) Combatants.get(1)).getMagia().equals("Negra")) {
+                            double bonus = DMG * 0.03;
+                            DMG = DMG + bonus;
+                        }
+                    }
+                    // End of DMG Buffs
+                    int aDPS = 0;
+                    if (Combatants.get(1) instanceof Barbaro) {
+                        aDPS = 15 + r.nextInt(15);
+                    } else if (Combatants.get(1) instanceof Mago) {
+                        aDPS = 5 + r.nextInt(5);
+                    } else if (Combatants.get(1) instanceof Clerigo) {
+                        aDPS = 5 + r.nextInt(10);
+                    } else if (Combatants.get(1) instanceof Picaro) {
+                        aDPS = 15 + r.nextInt(10);
+                    }
+                    if (DMG > cAC1) {
+                        if (DMG > cCS2) {
+                            aDPS = aDPS * 2;
+                            Roll.setText("Critial Hit! " + DMG);
+                        } else {
+                            aDPS = aDPS;
+                            Roll.setText("Hit! " + DMG);
+                        }
+                        cHP1 = cHP1 - aDPS;
+                        if (cHP1 <= 0) {
+                            Roll.setText(Combatants.get(0).getNombre() + " ha sido derrotado!");
+                            JOptionPane.showMessageDialog(this, Combatants.get(1).getNombre() + " ha ganado!");
+                            CombatDialog.setVisible(false);
+                        }
+                    } else {
+                        Roll.setText("Miss! " + DMG);
+                    }
+                    turno++;
+                    Turn_Label.setText("Turn " + turno);
+                    Active_Player.setForeground(Color.RED);
+                    Active_Player.setText("Active Player: " + Combatants.get(0).getNombre());
+                    P1_AC.setText("P1 AC: " + cAC1);
+                    P1_HP.setText("P1 HP: " + cHP1);
+                    P1_CS.setText("P1 CS: " + cCS1);
+                    P2_AC.setText("P2 AC: " + cAC2);
+                    P2_HP.setText("P2 HP: " + cHP2);
+                    P2_CS.setText("P2 CS: " + cCS2);
+                }else{
+                    cAC2 = AC2;
+                if (Combatants.get(1).getPclass().equals("Support")) {
+                    SupportAC2 = cAC2 * 0.03;
+                    cAC2 = cAC2 + SupportAC2;
+                    SupportAC2 = SupportAC2 + SupportAC2;
+                } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                    SPMac2 = cAC2 * 0.02;
+                    cAC2 = cAC2 + SPMac2;
+                    SPMac2 = SPMac2 + SPMac2;
+                } else if (Combatants.get(1).getPclass().equals("Tank")) {
+                    TankHP2 = cHP2 * 0.02;
+                    cHP2 = cHP2 + TankHP2;
+                } else if (Combatants.get(1) instanceof Mago) {
+                    if (((Mago) Combatants.get(1)).getMagia().equals("Sanador")) {
+                        double hp = HP2 * 0.01;
+                        cHP2 = cHP2 + hp;
+                    }
+                }
+                cAC2 = cAC2 + 10;
+                Roll.setText(Combatants.get(1).getNombre() + " defiende!");
+                turno++;
+                Turn_Label.setText("Turn " + turno);
+                Active_Player.setForeground(Color.RED);
+                Active_Player.setText("Active Player: " + Combatants.get(0).getNombre());
+                P1_AC.setText("P1 AC: " + cAC1);
+                P1_HP.setText("P1 HP: " + cHP1);
+                P1_CS.setText("P1 CS: " + cCS1);
+                P2_AC.setText("P2 AC: " + cAC2);
+                P2_HP.setText("P2 HP: " + cHP2);
+                P2_CS.setText("P2 CS: " + cCS2);
+                }
+            }
+        }
+    }//GEN-LAST:event_RollMouseClicked
+
+    private void P2_DefendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_P2_DefendMouseClicked
+        if (P2_Attack.isEnabled() ){
+            if (turno % 2 == 0){
+                // Player Prebuffs
+                cAC2 = AC2;
+                if (Combatants.get(1).getPclass().equals("Support")) {
+                    SupportAC2 = cAC2 * 0.03;
+                    cAC2 = cAC2 + SupportAC2;
+                    SupportAC2 = SupportAC2 + SupportAC2;
+                } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                    SPMac2 = cAC2 * 0.02;
+                    cAC2 = cAC2 + SPMac2;
+                    SPMac2 = SPMac2 + SPMac2;
+                } else if (Combatants.get(1).getPclass().equals("Tank")) {
+                    TankHP2 = cHP2 * 0.02;
+                    cHP2 = cHP2 + TankHP2;
+                } else if (Combatants.get(1) instanceof Mago) {
+                    if (((Mago) Combatants.get(1)).getMagia().equals("Sanador")) {
+                        double hp = HP2 * 0.01;
+                        cHP2 = cHP2 + hp;
+                    }
+                }
+                cAC2 = cAC2 + 10;
+                Roll.setText(Combatants.get(1).getNombre() + " defiende!");
+                turno++;
+                Turn_Label.setText("Turn " + turno);
+                Active_Player.setForeground(Color.RED);
+                Active_Player.setText("Active Player: " + Combatants.get(0).getNombre());
+                P1_AC.setText("P1 AC: " + cAC1);
+                P1_HP.setText("P1 HP: " + cHP1);
+                P1_CS.setText("P1 CS: " + cCS1);
+                P2_AC.setText("P2 AC: " + cAC2);
+                P2_HP.setText("P2 HP: " + cHP2);
+                P2_CS.setText("P2 CS: " + cCS2);
+            }else{
+                JOptionPane.showMessageDialog(this, "No es su turno");
+            }
+        } else{
+            if (turno % 2 != 0){
+                                cAC2 = AC2;
+                if (Combatants.get(1).getPclass().equals("Support")) {
+                    SupportAC2 = cAC2 * 0.03;
+                    cAC2 = cAC2 + SupportAC2;
+                    SupportAC2 = SupportAC2 + SupportAC2;
+                } else if (Combatants.get(1).getPclass().equals("Spammer")) {
+                    SPMac2 = cAC2 * 0.02;
+                    cAC2 = cAC2 + SPMac2;
+                    SPMac2 = SPMac2 + SPMac2;
+                } else if (Combatants.get(1).getPclass().equals("Tank")) {
+                    TankHP2 = cHP2 * 0.02;
+                    cHP2 = cHP2 + TankHP2;
+                } else if (Combatants.get(1) instanceof Mago) {
+                    if (((Mago) Combatants.get(1)).getMagia().equals("Sanador")) {
+                        double hp = HP2 * 0.01;
+                        cHP2 = cHP2 + hp;
+                    }
+                }
+                cAC2 = cAC2 + 10;
+                Roll.setText(Combatants.get(1).getNombre() + " defiende!");
+                turno++;
+                Turn_Label.setText("Turn " + turno);
+                Active_Player.setForeground(Color.RED);
+                Active_Player.setText("Active Player: " + Combatants.get(0).getNombre());
+                P1_AC.setText("P1 AC: " + cAC1);
+                P1_HP.setText("P1 HP: " + cHP1);
+                P1_CS.setText("P1 CS: " + cCS1);
+                P2_AC.setText("P2 AC: " + cAC2);
+                P2_HP.setText("P2 HP: " + cHP2);
+                P2_CS.setText("P2 CS: " + cCS2);
+            }else{
+                JOptionPane.showMessageDialog(this, "No es su turno");
+            }
+        }
+    }//GEN-LAST:event_P2_DefendMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1594,6 +2371,7 @@ public class Mainframe extends javax.swing.JFrame {
     private javax.swing.JButton PvE_A;
     private javax.swing.JButton PvE_T;
     private javax.swing.JButton PvP;
+    private javax.swing.JLabel Roll;
     private javax.swing.JLabel Turn_Label;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

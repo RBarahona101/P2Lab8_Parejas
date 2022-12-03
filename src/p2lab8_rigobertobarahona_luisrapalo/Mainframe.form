@@ -35,7 +35,6 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel49" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" attributes="0">
@@ -52,9 +51,22 @@
                                           <Component id="Active_Player" pref="301" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="P1_AC" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
-                                  <Component id="P1_HP" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
-                                  <Component id="P1_CS" alignment="0" min="-2" pref="168" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel49" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
+                                          <Component id="P1_AC" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="P1_HP" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
+                                          <Component id="P1_CS" alignment="0" min="-2" pref="168" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="Roll" min="-2" pref="270" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -121,17 +133,25 @@
                           <Component id="P1_AC" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="P2_AC" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="P1_HP" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P2_HP" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="P1_HP" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="P2_HP" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="P1_CS" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="P2_CS" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="Roll" min="-2" pref="47" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="P1_CS" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="P2_CS" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="P1_Attack" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
                           <Component id="P2_Attack" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
@@ -280,6 +300,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="P1_AttackMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="P1_Defend">
               <Properties>
@@ -294,6 +317,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="P1_DefendMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="P2_Attack">
               <Properties>
@@ -311,6 +337,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="P2_AttackMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="P2_Defend">
               <Properties>
@@ -328,6 +357,14 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="P2_DefendMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="Roll">
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="RollMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -1920,6 +1957,9 @@
                       <Color id="Hand Cursor"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PvE_TMouseClicked"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="PvE_A">
                   <Properties>
